@@ -3,7 +3,11 @@ import java.util.Scanner;
 class Barang {
     String nama;
     int harga;
-    Barang(String n, int h) { nama = n; harga = h; }
+
+    Barang(String n, int h) {
+        nama = n;
+        harga = h;
+    }
 }
 
 class Transaksi {
@@ -11,7 +15,7 @@ class Transaksi {
     String namaPembeli;
     Barang barang;
     int qty;
-    int status; 
+    int status;
     boolean isMember;
     Transaksi next;
 
@@ -38,7 +42,8 @@ class QueueTransaksi {
     }
 
     void appendQueue(QueueTransaksi q) {
-        if (q.front == null) return;
+        if (q.front == null)
+            return;
         if (rear == null) {
             front = q.front;
             rear = q.rear;
@@ -50,7 +55,7 @@ class QueueTransaksi {
 }
 
 public class AppWarungWongSolo {
-    
+
     // 5 Objek barang terpisah
     static Barang ayamBakar = new Barang("Ayam Bakar", 20000);
     static Barang ayamGoreng = new Barang("Ayam Goreng", 18000);
@@ -62,7 +67,7 @@ public class AppWarungWongSolo {
     static String idM1 = "1", passM1 = "1";
     static String idM2 = "2", passM2 = "2";
     static String idM3 = "3", passM3 = "3";
-    
+
     // Total Belanja Member
     static int belanjaM1 = 0;
     static int belanjaM2 = 0;
@@ -92,7 +97,7 @@ public class AppWarungWongSolo {
             System.out.println("1. Pembeli\n2. Member\n3. Admin\n4. Pemilik\n5. Keluar");
             System.out.print("Pilih Level = ");
             level = sc.nextInt();
-            
+
             switch (level) {
                 case 1:
                     System.out.print("Nama Pembeli: ");
@@ -104,10 +109,10 @@ public class AppWarungWongSolo {
                     String id = sc.next();
                     System.out.print("Password: ");
                     String pass = sc.next();
-                    
-                    if ((id.equals(idM1) && pass.equals(passM1)) || 
-                        (id.equals(idM2) && pass.equals(passM2)) || 
-                        (id.equals(idM3) && pass.equals(passM3))) {
+
+                    if ((id.equals(idM1) && pass.equals(passM1)) ||
+                            (id.equals(idM2) && pass.equals(passM2)) ||
+                            (id.equals(idM3) && pass.equals(passM3))) {
                         menuBelanja(sc, id, true, id);
                     } else {
                         System.out.println("Login Member Gagal!");
@@ -132,19 +137,20 @@ public class AppWarungWongSolo {
             }
         } while (level != 5);
     }
-    
+
     static void menuBelanja(Scanner sc, String nama, boolean isMember, String idMember) {
         QueueTransaksi belanjaan = new QueueTransaksi();
-        String kode = "12-01-" + nomorUrut++; 
-        
+        String kode = "12-01-" + nomorUrut++;
+
         int pilihan = 0;
         do {
             System.out.println("\n-- Belanja (" + nama + ") --");
             System.out.println("1. Tambah\n2. Hapus\n3. Lihat\n4. Selesai");
-            if (isMember) System.out.println("5. Ubah Password");
+            if (isMember)
+                System.out.println("5. Ubah Password");
             System.out.print("Pilih = ");
             pilihan = sc.nextInt();
-            
+
             if (pilihan == 1) {
                 System.out.println("1." + ayamBakar.nama + " (Rp" + ayamBakar.harga + ")");
                 System.out.println("2." + ayamGoreng.nama + " (Rp" + ayamGoreng.harga + ")");
@@ -155,14 +161,19 @@ public class AppWarungWongSolo {
                 int b = sc.nextInt();
                 System.out.print("Jumlah: ");
                 int q = sc.nextInt();
-                
+
                 Barang dipilih = null;
-                if (b == 1) dipilih = ayamBakar;
-                else if (b == 2) dipilih = ayamGoreng;
-                else if (b == 3) dipilih = nasi;
-                else if (b == 4) dipilih = esTeh;
-                else if (b == 5) dipilih = airPutih;
-                
+                if (b == 1)
+                    dipilih = ayamBakar;
+                else if (b == 2)
+                    dipilih = ayamGoreng;
+                else if (b == 3)
+                    dipilih = nasi;
+                else if (b == 4)
+                    dipilih = esTeh;
+                else if (b == 5)
+                    dipilih = airPutih;
+
                 if (dipilih != null) {
                     belanjaan.enqueue(new Transaksi(kode, nama, dipilih, q, isMember));
                 }
@@ -178,7 +189,7 @@ public class AppWarungWongSolo {
                     System.out.println(t.barang.nama + " x" + t.qty + " = " + sub);
                 }
                 if (isMember) {
-                    int diskon = (int)(total * 0.05);
+                    int diskon = (int) (total * 0.05);
                     System.out.println("Diskon 5%: -" + diskon);
                     total -= diskon;
                 }
@@ -190,14 +201,17 @@ public class AppWarungWongSolo {
             } else if (pilihan == 5 && isMember) {
                 System.out.print("Password Baru: ");
                 String newPass = sc.next();
-                if (idMember.equals(idM1)) passM1 = newPass;
-                else if (idMember.equals(idM2)) passM2 = newPass;
-                else if (idMember.equals(idM3)) passM3 = newPass;
+                if (idMember.equals(idM1))
+                    passM1 = newPass;
+                else if (idMember.equals(idM2))
+                    passM2 = newPass;
+                else if (idMember.equals(idM3))
+                    passM3 = newPass;
                 System.out.println("Password Diubah!");
             }
         } while (true);
     }
-    
+
     static void menuAdmin(Scanner sc) {
         int pilihan = 0;
         do {
@@ -205,12 +219,13 @@ public class AppWarungWongSolo {
             System.out.println("1. Tampil Belum Diproses\n2. Proses Transaksi\n3. Keluar");
             System.out.print("Pilih = ");
             pilihan = sc.nextInt();
-            
+
             if (pilihan == 1) {
                 int jumlah = 0;
                 for (Transaksi t = transaksiTotal.front; t != null; t = t.next) {
                     if (t.status == 0) {
-                        System.out.println("[" + t.kodeTransaksi + "] " + t.namaPembeli + " beli " + t.barang.nama + " x" + t.qty);
+                        System.out.println(
+                                "[" + t.kodeTransaksi + "] " + t.namaPembeli + " beli " + t.barang.nama + " x" + t.qty);
                         jumlah++;
                     }
                 }
@@ -226,18 +241,27 @@ public class AppWarungWongSolo {
                     if (sc.nextInt() == 1) {
                         curr.status = 1;
                         int bayar = curr.qty * curr.barang.harga;
-                        if (curr.isMember) bayar -= (bayar * 0.05);
-                        
-                        if (curr.barang == ayamBakar) incomeAyamBakar += bayar;
-                        else if (curr.barang == ayamGoreng) incomeAyamGoreng += bayar;
-                        else if (curr.barang == nasi) incomeNasi += bayar;
-                        else if (curr.barang == esTeh) incomeEsTeh += bayar;
-                        else if (curr.barang == airPutih) incomeAirPutih += bayar;
-                        
+                        if (curr.isMember)
+                            bayar -= (bayar * 0.05);
+
+                        if (curr.barang == ayamBakar)
+                            incomeAyamBakar += bayar;
+                        else if (curr.barang == ayamGoreng)
+                            incomeAyamGoreng += bayar;
+                        else if (curr.barang == nasi)
+                            incomeNasi += bayar;
+                        else if (curr.barang == esTeh)
+                            incomeEsTeh += bayar;
+                        else if (curr.barang == airPutih)
+                            incomeAirPutih += bayar;
+
                         if (curr.isMember) {
-                            if (curr.namaPembeli.equals(idM1)) belanjaM1 += bayar;
-                            else if (curr.namaPembeli.equals(idM2)) belanjaM2 += bayar;
-                            else if (curr.namaPembeli.equals(idM3)) belanjaM3 += bayar;
+                            if (curr.namaPembeli.equals(idM1))
+                                belanjaM1 += bayar;
+                            else if (curr.namaPembeli.equals(idM2))
+                                belanjaM2 += bayar;
+                            else if (curr.namaPembeli.equals(idM3))
+                                belanjaM3 += bayar;
                         }
                         System.out.println("Berhasil diproses!");
                     }
@@ -247,22 +271,26 @@ public class AppWarungWongSolo {
             }
         } while (pilihan != 3);
     }
-    
+
     static void menuPemilik(Scanner sc) {
         int pilihan = 0;
         do {
             System.out.println("\n-- Pemilik --");
-            System.out.println("1. Total Order\n2. Ubah Harga\n3. Laporan Harian\n4. Belanja Member\n5. Grafik Penjualan\n6. Keluar");
+            System.out.println(
+                    "1. Total Order\n2. Ubah Harga\n3. Laporan Harian\n4. Belanja Member\n5. Grafik Penjualan\n6. Keluar");
             System.out.print("Pilih = ");
             pilihan = sc.nextInt();
-            
+
             if (pilihan == 1) {
                 int sudah = 0, belum = 0;
                 for (Transaksi t = transaksiTotal.front; t != null; t = t.next) {
                     int sub = t.qty * t.barang.harga;
-                    if (t.isMember) sub -= (sub * 0.05);
-                    if (t.status == 1) sudah += sub;
-                    else belum += sub;
+                    if (t.isMember)
+                        sub -= (sub * 0.05);
+                    if (t.status == 1)
+                        sudah += sub;
+                    else
+                        belum += sub;
                 }
                 System.out.println("Sudah Diproses: " + sudah);
                 System.out.println("Belum Diproses: " + belum);
@@ -272,12 +300,17 @@ public class AppWarungWongSolo {
                 int b = sc.nextInt();
                 System.out.print("Harga Baru = ");
                 int h = sc.nextInt();
-                
-                if (b == 1) ayamBakar.harga = h;
-                else if (b == 2) ayamGoreng.harga = h;
-                else if (b == 3) nasi.harga = h;
-                else if (b == 4) esTeh.harga = h;
-                else if (b == 5) airPutih.harga = h;
+
+                if (b == 1)
+                    ayamBakar.harga = h;
+                else if (b == 2)
+                    ayamGoreng.harga = h;
+                else if (b == 3)
+                    nasi.harga = h;
+                else if (b == 4)
+                    esTeh.harga = h;
+                else if (b == 5)
+                    airPutih.harga = h;
             } else if (pilihan == 3) {
                 System.out.println("Ayam Bakar : " + incomeAyamBakar);
                 System.out.println("Ayam Goreng: " + incomeAyamGoreng);
@@ -297,7 +330,7 @@ public class AppWarungWongSolo {
             }
         } while (pilihan != 6);
     }
-    
+
     static void cetakGrafik(String nama, int income) {
         String xStr = "";
         for (int i = 0; i < (income / 10000); i++) {
